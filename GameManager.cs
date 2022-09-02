@@ -79,27 +79,32 @@ namespace GoogleGame
 #if UNITY_ANDROID
             if (Input.GetKeyUp(KeyCode.Escape))
             {
-                // Ask if user wants to exit
-                NativeUI.AlertPopup alert = NativeUI.ShowTwoButtonAlert("뒤로가기",
-                                                "Do you want to exit?",
-                                                "Yes",
-                                                "No");
-
-                if (alert != null)
-                    alert.OnComplete += delegate (int button)
+                // 이미 팝업 떠있다면 무시
+                if (NativeUI.IsShowingAlert())
+                {
+                     return;
+                }
+                
+                var popup = NativeUI.ShowTwoButtonAlert("앱 종료", "게임을 그만두고 앱을 종료하시겠습니까?", "종료하기", "취소하기");
+                popup.OnComplete += button =>
+                {
+                    if (button == 0)
                     {
-                        if (button == 0) Application.Quit();
-                    };
+                        Debug.LogWarning("정상적으로 들어오긴 함?");
+                        Application.Quit();
+                    }
+                };
+
             }
 
 #endif
         }
 
-        [System.Obsolete]
-        private void OnApplicationQuit()
-        {
-            Application.CancelQuit();
-        }
+        // [System.Obsolete]
+        // private void OnApplicationQuit()
+        // {
+        //     Application.CancelQuit();
+        // }
 
 
 #region <로컬 푸쉬 관련>

@@ -53,22 +53,24 @@ namespace GoogleGame
         /// <summary>
         /// 나누 로그인되면 true
         /// </summary>
-        bool IsNannoLogin
+        private bool IsNannoLogin
         {
-            get
-            {
-                if (PlayerPrefs.GetInt("isNannoLogin", 0) == 1)
-                {
-                    return true;
-                }
-
-                return false;
-            }
-            set
-            {
-                PlayerPrefs.SetInt("isNannoLogin", value ? 1 : 0);
-                PlayerPrefs.Save();
-            }
+            get;
+            set;
+            // get
+            // {
+            //     if (PlayerPrefs.GetInt("isNannoLogin", 0) == 1)
+            //     {
+            //         return true;
+            //     }
+            //
+            //     return false;
+            // }
+            // set
+            // {
+            //     PlayerPrefs.SetInt("isNannoLogin", value ? 1 : 0);
+            //     PlayerPrefs.Save();
+            // }
         }
 
         //GoogleSignInConfiguration googleSignInConfiguration;
@@ -339,13 +341,13 @@ namespace GoogleGame
                         /// 나누 로그인 성공!
                         Debug.LogError($"나누 로그인 성공!! {NickName}님! guid : {_playerID}");
                         Debug.LogError("접속 지역? : " + values["country"].ToString());
-
-                        /// 우편함 호출
-                        Postbox();
-                        IsNannoLogin = true;
-
+                        
                         /// unknown 이면 기존 유저 로그인 플로우
                         UserType = AccountType.OLDDER;
+                        
+                        /// 우편함 호출
+                        Postbox();
+
                         MySceneManager.Instance.JumpScemaLocation(MyLocation.MainScene);
                     }
                     else
@@ -950,6 +952,15 @@ namespace GoogleGame
         /// </summary>
         public void Postbox()
         {
+            Debug.LogWarning($"우편함 조회시 : {isNickNameExist} / {UserType}");
+
+            // 만약 닉네임 중복없이 생성되었거나, 이미 로그인했던 사람이면?
+            if (isNickNameExist == NameType.NOT_EXIST || UserType == AccountType.OLDDER)
+            {
+                Debug.LogWarning("나누 로그인 되었다 트리거 체크");
+                IsNannoLogin = true;
+            }
+            
             plugin.PostboxItem((state, message, rawData, dictionary) =>
             {
                 if (state.Equals(Configure.PN_API_STATE_SUCCESS))

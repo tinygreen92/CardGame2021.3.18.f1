@@ -261,6 +261,8 @@ namespace GoogleGame
                 yield return null;
             }
             
+            // 우편함 한번 호출
+            NanooManager.Instance.Postbox();
             Debug.LogWarning("팝플레이 오프");
             GameManager.isPopPlay = false;
             
