@@ -27,7 +27,7 @@ namespace GoogleGame
         public Button.ButtonClickedEvent _DenyEvent;
 
         /*
-         * private
+         * private 블러 맥일꺼 선언
          */
         private SuperBlurFast superBlur;
         private WaitForSeconds delaySeconds = new WaitForSeconds(1f);
@@ -39,14 +39,14 @@ namespace GoogleGame
                 superBlur = Camera.main.GetComponent<SuperBlurFast>();
             }
         }
-
-
+        
         /// <summary>
         /// 블러 켜주면서 팝업창 오픈
         /// </summary>
         public void ShowThisPop()
         {
-            if (superBlur == null) superBlur = Camera.main.GetComponent<SuperBlurFast>();
+            if (superBlur == null) 
+                superBlur = Camera.main.GetComponent<SuperBlurFast>();
             superBlur.enabled = true;
             Debug.LogWarning("팝플레이 온");
             GameManager.isPopPlay = true;
@@ -105,10 +105,13 @@ namespace GoogleGame
         IEnumerator SlowButton(Text okayBtnText)
         {
             int cnt = 0;
+            int maxCnt = 3;
+            okayBtnText.text = $"종료...({maxCnt})";
+            
             while (true)
             {
                 yield return delaySeconds;
-                if (cnt > 3)
+                if (cnt >= maxCnt)
                 {
                     okayBtnText.text = "종료";    // TODO : 로컬라이징 필요
                     _OkayBtn.enabled = true;
@@ -116,7 +119,7 @@ namespace GoogleGame
                 }
                 else
                 {
-                    okayBtnText.text = "종료... (" + (3 - cnt) + ")";
+                    okayBtnText.text = $"종료...({maxCnt - cnt})";
                     cnt++;
                 }
             }
@@ -139,6 +142,7 @@ namespace GoogleGame
 
             _Title.text = title;
             _Intext.text = intext;
+            _OkayBtn.GetComponentInChildren<Text>().text = "확인";
 
             _OkayEvent = _OkayBtn.onClick;
             _OkayEvent.AddListener(HideThisPop);

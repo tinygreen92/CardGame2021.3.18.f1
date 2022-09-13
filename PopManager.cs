@@ -75,7 +75,7 @@ namespace GoogleGame
             /// 유저 상태에 따라 팝업 선택해서 뿌려줌
             StartCoroutine(UserAccoutDetect());
 
-            /// 유니티에서 클릭하면
+            /// TODO : 나누 연결 아이디 바꿔주기
             NanooManager.Instance.NanooInit("g03324484546715956101");
         }
 

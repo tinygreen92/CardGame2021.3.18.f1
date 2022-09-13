@@ -95,12 +95,18 @@ namespace GoogleGame
             {
                 Debug.LogError("DataReady 에서 널 익셉션 발생!" + e);
 
+#if UNITY_EDITOR
+                Debug.LogError("모바일 버전이 아니니까 봐준다.");
+#else
                 // TODO : 나누서버로 거수자 정보 전송
                 NanooManager.Instance.NanooNanooPumpThisGame("abc_Gotcha_Cheater", "로컬 데이터가 손상 널 익셉션");
                 /// 팝업 호출
                 NanooManager.Instance.popBind.Pop_1Button_Init(APPdown, "널 익셉션 발생!",
                     "로컬 데이터가 손상되었습니다. 임의로 건들였나요????? 강제로 앱을 종료합니다.");
                 NanooManager.Instance.popBind.ShowThisPop();
+#endif
+                
+
                 return;
             }
 
@@ -146,7 +152,7 @@ namespace GoogleGame
         }
 
         /// <summary>
-        /// 앱 종료
+        /// 앱 종료 + 나누 토큰 해지
         /// </summary>
         public void APPdown()
         {

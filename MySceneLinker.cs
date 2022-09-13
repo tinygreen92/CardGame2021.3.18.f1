@@ -41,6 +41,7 @@ namespace GoogleGame
                 case "03.BattleScene":
                     MySceneManager.Instance.locations[2].Enter();
                     break;
+                
             }
         }
 
@@ -144,17 +145,13 @@ namespace GoogleGame
         public void NANOO_BTN_TokenStatus() => NanooManager.Instance.AccountTokenStatus();
         public void NANOO_BTN_TokenSignOut() => NanooManager.Instance.AccountTokenSignOut();
         public void NANOO_BTN_OpenHelpDesk() => NanooManager.Instance.OpenHelpDesk();
+        
+        public void NANOO_BTN_ShopInfo() => NanooManager.Instance.OpenShopInfo();
 
-        public void NANOO_BTN_AccountWithDrawal()
-        {
-            NanooManager.Instance.AccountWithDrawal();
-        }
+        public void NANOO_BTN_AccountWithDrawal() => NanooManager.Instance.AccountWithDrawal();
 
 
-        public void TEST_AutoPlay()
-        {
-            AutoPlay.instance.TestBtn_AutoPlay();
-        }
+        public void TEST_AutoPlay() => AutoPlay.instance.TestBtn_AutoPlay();
 
 
         /// <summary>

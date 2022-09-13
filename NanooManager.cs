@@ -99,7 +99,9 @@ namespace GoogleGame
 
             // 나누 세팅
             plugin = Plugin.GetInstance();
+            // TODO : 국가코드 어케함
             plugin.SetLanguage(Configure.PN_LANG_KO);
+            
             GameObject.Find("PlayNANOO").transform.SetParent(transform);
             // 보호된 pp 수정시 발동
             ObscuredPrefs.OnAlterationDetected += SavesAlterationDetected;
@@ -370,7 +372,9 @@ namespace GoogleGame
                             
                             IsDuplicate = true;
                             Debug.LogError("중복 로그인 감지 Duplicate connection has been detected.");
-                            popBind.Pop_RealExit_Init(RestartAppForAOS, "중복 로그인 시도 감지", "다른 곳에서 로그인 하지마삼");
+                            // TODO : 임시로 토큰 초기화 버튼 넣어둠
+                            popBind.Pop_2Button_Init(DupliTrrigerOn, AccountTokenSignOut, "Pop_2Button_Init", "다른 곳에서 로그인 하지마삼");
+                            popBind.ShowThisPop();
                             
                             break;
                         case "70002":
@@ -708,6 +712,13 @@ namespace GoogleGame
             //plugin.SetHelpDeskOptional("OptionTest2", "ValueTest2");
             plugin.OpenHelpDesk();
         }
+
+
+        /// <summary>
+        /// 확률 정보 고시
+        /// </summary>
+        public void OpenShopInfo() => plugin.OpenForumView("https://forum.playnanoo.com/royalcarddefense");
+
 
         /// <summary>
         /// 세이브 플러스
@@ -1133,7 +1144,7 @@ namespace GoogleGame
             IsDuplicate = true;
             Debug.LogError("중복 로그인 감지 Duplicate connection has been detected.");
             // TODO : 임시로 토큰 초기화 버튼 넣어둠
-            popBind.Pop_2Button_Init(DupliTrrigerOn, AccountTokenSignOut, "중복 로그인 시도 감지", "다른 곳에서 로그인 하지마삼");
+            popBind.Pop_2Button_Init(DupliTrrigerOn, AccountTokenSignOut, "Pop_2Button_Init", "다른 곳에서 로그인 하지마삼");
             popBind.ShowThisPop();
 
         }

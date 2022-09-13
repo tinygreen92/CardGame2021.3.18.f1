@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using CodeStage.AntiCheat.ObscuredTypes;
 using EasyMobile;
@@ -72,39 +73,46 @@ namespace GoogleGame
             // UnityEngine.Debug.unityLogger.logEnabled = false;   
             /// 디버그 로그 꺼줌
         }
-        
-        void Update()
+
+        private bool _preparedToQuit;
+        private void Update()
         {
-            // TODO : 뒤로가기 
-#if UNITY_ANDROID
-            if (Input.GetKeyUp(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                // 이미 팝업 떠있다면 무시
-                if (NativeUI.IsShowingAlert())
+                if (_preparedToQuit == false)
                 {
-                     return;
+                    NativeUI.ShowToast("앱을 종료하려면 뒤로가기 버튼을 두 번 눌러주세요.");
+                    PrepareToQuit();
                 }
-                
-                var popup = NativeUI.ShowTwoButtonAlert("앱 종료", "게임을 그만두고 앱을 종료하시겠습니까?", "종료하기", "취소하기");
-                popup.OnComplete += button =>
+                else
                 {
-                    if (button == 0)
-                    {
-                        Debug.LogWarning("정상적으로 들어오긴 함?");
-                        Application.Quit();
-                    }
-                };
-
-            }
-
+                    Debug.Log("Quit");
+#if UNITY_EDITOR
+                    UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
 #endif
+                }
+            }
+        }
+        
+        private void PrepareToQuit()
+        {
+            StartCoroutine(PrepareToQuitRoutine());
         }
 
-        // [System.Obsolete]
-        // private void OnApplicationQuit()
-        // {
-        //     Application.CancelQuit();
-        // }
+        private IEnumerator PrepareToQuitRoutine()
+        {
+            _preparedToQuit = true;
+            yield return new WaitForSecondsRealtime(2.5f);
+            _preparedToQuit = false;
+        }
+
+        [System.Obsolete]
+        private void OnApplicationQuit()
+        {
+            Application.CancelQuit();
+        }
 
 
 #region <로컬 푸쉬 관련>
