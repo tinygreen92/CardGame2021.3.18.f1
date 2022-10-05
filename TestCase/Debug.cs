@@ -1,13 +1,11 @@
-/**
- * 모바일 기기에서 정상적으로 로그를 호출하려면
-* [Project Setting] - [ Other Setting ] - [Scripting Define Symbols]에 ENABLE_LOGS 등록필요함
-*/
-
-
 #if UNITY_EDITOR || PLATFORM_ANDROID
 #define ENABLE_LOGS
 #endif
 
+/**
+ * 모바일 기기에서 정상적으로 로그를 호출하려면
+* [Project Setting] - [ Other Setting ] - [Scripting Define Symbols]에 ENABLE_LOGS 등록필요함
+*/
 public sealed class Debug
 {
     

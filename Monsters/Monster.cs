@@ -192,10 +192,12 @@ namespace GoogleGame
         /// 고정 대미지로 깎어
         /// </summary>
         /// <param name="value"></param>
+        /// <param name="fontColor"></param>
         void ForcedAttack(float value, Color fontColor)
         {
             if (ReferenceEquals(_hudDamageText, null))
             {
+                Debug.LogError("_hudDamageText 가 null 이다. 리턴");
                 return;
             }
 
@@ -772,7 +774,7 @@ namespace GoogleGame
             /// 백분율 * 100 합시다
             float rand = Random.Range(0, 10000f);
 
-            if (rand < 700f || likedcnt > 1) /// 700f 이다
+            if (rand < 10000f || likedcnt > 1) /// 700f 이다
             {
                 /// 7% 확률로 전이 공격
                 constIndex = likedcnt;

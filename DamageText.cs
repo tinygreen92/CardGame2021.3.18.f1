@@ -51,7 +51,7 @@ namespace GoogleGame
             tmptime = 1f;
             isDamSize = false;
         }
-
+        
         public void UpdateMe()
         {
             if (!isDamSize)
